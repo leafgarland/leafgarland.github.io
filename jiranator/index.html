@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>JS Bin</title>
+	<title>Jiranator</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 
@@ -15,27 +15,26 @@
 	<h1>Options:</h1>
 	<label for="ticket">Branch Name:</label>
 	<input type="text" id="ticket" size="50" />
+    <textarea>{ticket}</textarea>
 	<h1>Git Scripts:</h1>
 	<h2>Checkout / Create branch:</h2>
 	<textarea>
-if ! git checkout {ticket};
-then 
-	git checkout master;
-	git pull --rebase
-	git checkout -b {ticket};
-fi
+if (-not (git checkout {ticket})) {
+    git checkout master
+    git pull --rebase
+    git checkout -b {ticket}
+}
 </textarea>
 
 	<h2>Checkout / Create branch With Stash:</h2>
 	<textarea>
-git stash;
-if ! git checkout {ticket};
-then 
-	git checkout master;
-	git pull --rebase
-	git checkout -b {ticket};
-fi;
-git stash pop;
+git stash
+if (-not (git checkout {ticket})) {
+    git checkout master
+    git pull --rebase
+    git checkout -b {ticket}
+}
+git stash pop
 </textarea>
 
 	<h1>Create PR</h1>
